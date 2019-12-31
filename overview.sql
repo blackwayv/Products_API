@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS products (
   slogan text,
   description text,
   category VARCHAR (20),
-  default_price integer
+  default_price VARCHAR (10)
 );
 
 CREATE TABLE IF NOT EXISTS features (
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS styles (
   product_id serial NOT NULL REFERENCES products(id),
   name VARCHAR (30),
   sale_price VARCHAR (10),
-  default_price integer,
+  default_price VARCHAR (10),
   default_style integer
 );
 
