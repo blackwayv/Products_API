@@ -11,12 +11,16 @@ CREATE TABLE IF NOT EXISTS products (
   default_price VARCHAR (10)
 );
 
+CREATE UNIQUE INDEX product_id ON products(id);
+
 CREATE TABLE IF NOT EXISTS features (
   id serial NOT NULL PRIMARY KEY,
   product_id serial NOT NULL,
   feature VARCHAR (30),
   value VARCHAR (30)
 );
+
+CREATE INDEX f_product_id on features(product_id);
 
 CREATE TABLE IF NOT EXISTS styles (
   id serial NOT NULL PRIMARY KEY,
@@ -27,6 +31,9 @@ CREATE TABLE IF NOT EXISTS styles (
   default_style integer
 );
 
+CREATE UNIQUE INDEX style_id on styles(id);
+CREATE INDEX s_product_id ON styles(product_id);
+
 CREATE TABLE IF NOT EXISTS skus (
   id serial NOT NULL PRIMARY KEY,
   style_id serial NOT NULL REFERENCES styles(id),
@@ -34,11 +41,15 @@ CREATE TABLE IF NOT EXISTS skus (
   quantity integer
 );
 
+CREATE INDEX s_style_id on skus(style_id);
+
 CREATE TABLE IF NOT EXISTS related (
   id serial NOT NULL PRIMARY KEY,
   current_id serial NOT NULL REFERENCES products(id),
   related_id serial NOT NULL
 );
+
+CREATE INDEX r_product_id ON related(current_id);
 
 CREATE TABLE IF NOT EXISTS photos (
   id serial NOT NULL PRIMARY KEY,
@@ -46,6 +57,8 @@ CREATE TABLE IF NOT EXISTS photos (
   url text,
   thumbnail_url text
 );
+
+CREATE INDEX p_style_id ON photos(style_id);
 
 COPY products(id,name,slogan,description,category,default_price)
 FROM 'C:\Program Files\PostgreSQL\bin\csv\product.csv' DELIMITER ',' CSV HEADER;

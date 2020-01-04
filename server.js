@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
@@ -10,26 +11,17 @@ app.listen(port, () => console.log(`Product Overview API listening on port ${por
 
 
 app.get('/products/list', (req, res) => {
-  //req.query
-  controllers.list(req.query.page, req.query.count, (result) => {
-    res.send(result);
-  });
+  controllers.list(req.query.page, req.query.count, result => res.send(result));
 });
 
 app.get('/products/:product_id', (req, res) => {
-  controllers.info(req.params.product_id, (result) => {
-    res.send(result);
-  })
-})
+  controllers.info(req.params.product_id, result => res.send(result));
+});
 
 app.get('/products/:product_id/styles', (req, res) => {
-  controllers.styles(req.params.product_id, (result) => {
-    res.send(result);
-  })
-})
+  controllers.styles(req.params.product_id, result => res.send(result));
+});
 
 app.get('/products/:product_id/related', (req, res) => {
-  controllers.related(req.params.product_id, (result) => {
-    res.send(result);
-  })
-})
+  controllers.related(req.params.product_id, result => res.send(result));
+});
